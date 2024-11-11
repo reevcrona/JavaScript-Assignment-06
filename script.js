@@ -6,8 +6,9 @@
   const typingInput = document.querySelector("input");
   const settingsButton = document.querySelector("#settings-btn");
   const settingsDiv = document.querySelector("#settings");
+  const settingsForm = document.querySelector("#settings-form");
   
-
+  
 // Array
 const words = [
   "dependent",
@@ -76,5 +77,24 @@ settingsButton.addEventListener("click", () => {
     settingsDiv.classList.remove("hide");
   }
   
+})
+
+
+settingsForm.addEventListener("change",(e) => {
+  if(e.target.name = "difficulty"){
+    switch(e.target.value){
+      case "hard":
+        timer = 4;
+        break;
+      case "medium":
+        timer = 6;
+        break;
+      case "easy":
+        timer = 10;
+        break;
+      default:
+        
+    }
+  }
 })
 addWordToDOM(words)
