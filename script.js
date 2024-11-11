@@ -8,6 +8,7 @@
   const settingsDiv = document.querySelector("#settings");
   const settingsForm = document.querySelector("#settings-form");
   const gameContainer = document.querySelector(".container");
+  const gameOverContainer = document.querySelector(".end-game-container");
   
 // Array
 const words = [
@@ -63,10 +64,29 @@ function updateTime(){
     timeSpan.textContent = `${timer}s` 
     if (timer <= 0){
       clearInterval(timeInterval)
-      
+      gameOver();
     }
 }
 
+function gameOver(){
+    const gameOverText = document.createElement("h2");
+    const gameOverButton = document.createElement("button");
+    const gameOverScore = document.createElement("h4");
+    gameOverButton.classList.add("game-over-button");
+    gameOverScore.textContent = `Final score: ${score}`;
+    gameOverButton.textContent ="Play again";
+    gameOverText.textContent ="GAME OVER!";
+    gameOverContainer.appendChild(gameOverText);
+    gameOverContainer.appendChild(gameOverScore);
+    gameOverContainer.appendChild(gameOverButton);
+    
+    gameOverContainer.style.display ="flex";
+
+    gameOverButton.addEventListener("click", () => {
+      location.reload();
+    })
+}
+// Event listeners
 typingInput.addEventListener("input", (e) => {
   if(e.target.value === displayWord.textContent){
     updateScore()
@@ -114,8 +134,10 @@ startButton.classList.add("start-button");
 gameContainer.appendChild(startButton);
 
 
+
 startButton.addEventListener("click", () => {
   addWordToDOM(words)
   timeInterval = setInterval(updateTime,1000);
   startButton.style.display ="none";
 })
+
