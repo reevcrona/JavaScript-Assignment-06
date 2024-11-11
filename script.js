@@ -3,7 +3,9 @@
   const displayWord = document.querySelector("#word");
   const scoreSpan = document.querySelector("#score");
   const timeSpan = document.querySelector("#time");
-  
+  const typingInput = document.querySelector("input");
+  const settingsButton = document.querySelector("#settings-btn");
+  const settingsDiv = document.querySelector("#settings");
   
 
 // Array
@@ -32,6 +34,7 @@ const words = [
 // Variables
 
 let timer = 10;
+let score = 0;
 const timeInterval = setInterval(updateTime,1000);
 
 // Functions
@@ -40,15 +43,38 @@ function addWordToDOM(arr){
 
     const randomWord = arr[randomIndex];
 
-    displayWord.textContent = randomWord
+    displayWord.textContent = randomWord;
+}
+
+function updateScore(){
+  score++;
+  scoreSpan.textContent = score;
 }
 
 function updateTime(){
     timer--;
     timeSpan.textContent = `${timer}s` 
     if (timer <= 0){
-      console.log("game over");
       clearInterval(timeInterval)
     }
 }
 
+typingInput.addEventListener("input", (e) => {
+  if(e.target.value === displayWord.textContent){
+    updateScore()
+    addWordToDOM(words)
+    timer += 5;
+    e.target.value = "";
+  }
+})
+
+
+settingsButton.addEventListener("click", () => {
+  if(!settingsDiv.classList.contains("hide")){
+    settingsDiv.classList.add("hide");
+  }else{
+    settingsDiv.classList.remove("hide");
+  }
+  
+})
+addWordToDOM(words)
