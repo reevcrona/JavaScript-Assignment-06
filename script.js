@@ -7,6 +7,7 @@
   const settingsButton = document.querySelector("#settings-btn");
   const settingsDiv = document.querySelector("#settings");
   const settingsForm = document.querySelector("#settings-form");
+  const selectElement = document.querySelector("#difficulty");
   const gameContainer = document.querySelector(".container");
   const gameOverContainer = document.querySelector(".end-game-container");
   
@@ -34,7 +35,7 @@ const words = [
 ];
 
 // Variables
-
+let timePlayed = 0;
 let timer = 10;
 let score = 0;
 let previousWord = "";
@@ -61,6 +62,7 @@ function updateScore(){
 
 function updateTime(){
     timer--;
+    timePlayed++;
     timeSpan.textContent = `${timer}s` 
     if (timer <= 0){
       clearInterval(timeInterval)
@@ -72,12 +74,16 @@ function gameOver(){
     const gameOverText = document.createElement("h2");
     const gameOverButton = document.createElement("button");
     const gameOverScore = document.createElement("h4");
+    const timeElapsed = document.createElement("h4");
     gameOverButton.classList.add("game-over-button");
+    gameOverText.classList.add("game-over-header");
     gameOverScore.textContent = `Final score: ${score}`;
     gameOverButton.textContent ="Play again";
+    timeElapsed.textContent = `Time played: ${timePlayed}s`
     gameOverText.textContent ="GAME OVER!";
     gameOverContainer.appendChild(gameOverText);
     gameOverContainer.appendChild(gameOverScore);
+    gameOverContainer.appendChild(timeElapsed)
     gameOverContainer.appendChild(gameOverButton);
     
     gameOverContainer.style.display ="flex";
@@ -91,8 +97,20 @@ typingInput.addEventListener("input", (e) => {
   if(e.target.value === displayWord.textContent){
     updateScore()
     addWordToDOM(words)
-    timer += 5;
+
+    switch(selectElement.value){
+      case "easy":
+        timer += 5;
+        break;
+      case "medium":
+        timer += 3;
+        break;
+      case "hard":
+        timer += 2;
+        break;
+    }
     e.target.value = "";
+    
   }
 })
 
@@ -139,5 +157,6 @@ startButton.addEventListener("click", () => {
   addWordToDOM(words)
   timeInterval = setInterval(updateTime,1000);
   startButton.style.display ="none";
+  selectElement.disabled = true;
 })
 
