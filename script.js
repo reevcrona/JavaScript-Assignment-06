@@ -7,7 +7,7 @@
   const settingsButton = document.querySelector("#settings-btn");
   const settingsDiv = document.querySelector("#settings");
   const settingsForm = document.querySelector("#settings-form");
-  
+  const gameContainer = document.querySelector(".container");
   
 // Array
 const words = [
@@ -37,7 +37,7 @@ const words = [
 let timer = 10;
 let score = 0;
 let previousWord = "";
-const timeInterval = setInterval(updateTime,1000);
+let timeInterval;
 
 // Functions
 function addWordToDOM(arr){
@@ -63,6 +63,7 @@ function updateTime(){
     timeSpan.textContent = `${timer}s` 
     if (timer <= 0){
       clearInterval(timeInterval)
+      
     }
 }
 
@@ -91,16 +92,30 @@ settingsForm.addEventListener("change",(e) => {
     switch(e.target.value){
       case "hard":
         timer = 4;
+        timeSpan.textContent ="4s"
         break;
       case "medium":
         timer = 6;
+        timeSpan.textContent ="6s"
         break;
       case "easy":
         timer = 10;
+        timeSpan.textContent ="10s"
         break;
       default:
         
     }
   }
 })
-addWordToDOM(words)
+
+const startButton = document.createElement("button");
+startButton.textContent = "Start game";
+startButton.classList.add("start-button");
+gameContainer.appendChild(startButton);
+
+
+startButton.addEventListener("click", () => {
+  addWordToDOM(words)
+  timeInterval = setInterval(updateTime,1000);
+  startButton.style.display ="none";
+})

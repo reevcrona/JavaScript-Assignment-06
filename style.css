@@ -131,3 +131,10 @@ input {
   height: 100%;
   z-index: 1;
 }
+
+.start-button{
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
