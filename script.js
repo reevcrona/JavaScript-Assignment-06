@@ -36,15 +36,21 @@ const words = [
 
 let timer = 10;
 let score = 0;
+let previousWord = "";
 const timeInterval = setInterval(updateTime,1000);
 
 // Functions
 function addWordToDOM(arr){
-    const randomIndex = Math.floor(Math.random() * arr.length);
+    
+    let randomWord;
 
-    const randomWord = arr[randomIndex];
+    do{
+      const randomIndex = Math.floor(Math.random() * arr.length);
+      randomWord = arr[randomIndex];
+    }while(randomWord === previousWord)
 
-    displayWord.textContent = randomWord;
+      displayWord.textContent = randomWord;
+      previousWord = randomWord;
 }
 
 function updateScore(){
