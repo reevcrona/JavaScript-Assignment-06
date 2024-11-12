@@ -43,16 +43,20 @@ let timeInterval;
 
 // Functions
 function addWordToDOM(arr){
-    
+  /* 
+     Ensures that a new word is displayed in the DOM each time. 
+     Preventing the same word from appearing twice in a row.
+  */  
+
     let randomWord;
 
     do{
       const randomIndex = Math.floor(Math.random() * arr.length);
       randomWord = arr[randomIndex];
-    }while(randomWord === previousWord)
+    }while(randomWord === previousWord) //Re-roll if the selected word is the same as the previous one
 
       displayWord.textContent = randomWord;
-      previousWord = randomWord;
+      previousWord = randomWord; // Update previousWord to the new word that was selected.
 }
 
 function updateScore(){
@@ -71,16 +75,20 @@ function updateTime(){
 }
 
 function gameOver(){
-    const gameOverText = document.createElement("h2");
+    
+  const gameOverText = document.createElement("h2");
     const gameOverButton = document.createElement("button");
     const gameOverScore = document.createElement("h4");
     const timeElapsed = document.createElement("h4");
+    
     gameOverButton.classList.add("game-over-button");
     gameOverText.classList.add("game-over-header");
+    
     gameOverScore.textContent = `Final score: ${score}`;
     gameOverButton.textContent ="Play again";
     timeElapsed.textContent = `Time played: ${timePlayed}s`
     gameOverText.textContent ="GAME OVER!";
+    
     gameOverContainer.appendChild(gameOverText);
     gameOverContainer.appendChild(gameOverScore);
     gameOverContainer.appendChild(timeElapsed)
@@ -126,7 +134,7 @@ settingsButton.addEventListener("click", () => {
 
 
 settingsForm.addEventListener("change",(e) => {
-  if(e.target.name = "difficulty"){
+  if(e.target.id === "difficulty"){
     switch(e.target.value){
       case "hard":
         timer = 4;
